@@ -1,0 +1,11 @@
+<input type="radio" name="{{name}}" id="{{id}}" class="tab-radio" value="{{value}}" {{#if checked}}checked{{/if}}>
+<label for="{{id}}" class="tab">{{title}}</label>
+
+<script>
+(() => {
+  document.getElementById('{{id}}').addEventListener('click', () => {
+    var tabsEl = document.getElementById('{{tabsId}}');
+    tabsEl.dispatchEvent(new CustomEvent('selectTab', { detail: '{{value}}' }));
+  });
+})();
+</script>

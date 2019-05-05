@@ -1,0 +1,17 @@
+default:
+  api:
+    port: 5000
+
+  views:
+    css:
+      topBar: topbar
+      leftPane: left-pane
+      rightPane: right-pane
+
+development:
+  api:
+    port: 3000
+
+production:
+  api:
+    port: 5000

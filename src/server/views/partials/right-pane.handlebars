@@ -1,0 +1,114 @@
+<div class="{{css.rightPane}}">
+  <div class="{{css.rightPane}}__toolbar">
+    {{#>tabs id='TemplateTabs'}}
+      {{>tab name='template' value='html' id=(concat css.rightPane '-html-radio' '') checked=true title='HTML'}}
+      {{>tab name='template' value='markdown' id=(concat css.rightPane '-markdown-radio' '') title='Markdown'}}
+    {{/tabs}}
+    <div class="{{css.rightPane}}__toolbar__content {{css.rightPane}}__toolbar__content--right">
+      {{>button button=true class='js-download-docs' icon='fas fa-cloud-download-alt' size='small' href='https://github.com/asyncapi/asyncapi' title='Download'}}
+    </div>
+    <div id="toolbar-error" class="{{css.rightPane}}__toolbar__error"></div>
+  </div>
+  <div class="errors-wrapper">
+    <h1>There are errors in your document:</h1>
+    <pre><code id="errors"></code></pre>
+  </div>
+  <iframe id="result" style="width: 100%; height: 100%; border: none; background-color: white;"
+    src="/html/template"></iframe>
+</div>
+
+<style>
+.{{css.rightPane}} {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 50%;
+  top: 50px;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.{{css.leftPane}}--collapsed ~ .{{css.rightPane}} {
+  left: 0;
+}
+
+.{{css.rightPane}}__toolbar {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 15px;
+  background-color: #526975;
+  box-shadow: rgba(0,0,0,.75) 0 0 5px;
+  z-index: 5;
+}
+
+.{{css.rightPane}}__toolbar__content {
+  flex: 1;
+}
+
+.{{css.rightPane}}__toolbar__content--right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.{{css.rightPane}} .errors-wrapper {
+  position: absolute;
+  padding: 20px;
+  background-color: #e53935;
+  color: white;
+}
+
+.{{css.rightPane}} .errors-wrapper--hidden {
+  display: none;
+}
+
+.{{css.rightPane}} .errors-wrapper h1 {
+  font-weight: 16px;
+}
+
+.{{css.rightPane}} .errors-wrapper code {
+  background-color: #263238;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+</style>
+
+<script>
+(() => {
+  document.getElementById('TemplateTabs').addEventListener('selectTab', (e) => {
+    var iframe = document.getElementById('result');
+
+    iframe.onload = () => { // Use onload instead of addEventListener to listen the event just once.
+      document.querySelector('{{app}}').dispatchEvent(new CustomEvent('templateChange', { detail: e.detail }));
+    };
+
+    switch(e.detail) {
+      case 'html':
+        iframe.contentWindow.location = '/html/template';
+        break;
+      case 'markdown':
+        iframe.contentWindow.location = '/markdown/template';
+        break;
+    }
+  });
+
+  document.querySelector('.js-download-docs').addEventListener('click', function () {
+    var value = editor.getValue();
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/download/html");
+    form.setAttribute("style", "display: none;");
+
+    var text = document.createElement("textarea");
+    text.setAttribute("name", "data");
+    text.value = value;
+    form.appendChild(text);
+
+    document.body.appendChild(form);
+
+    form.submit();
+  });
+})();
+</script>

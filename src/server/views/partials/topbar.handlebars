@@ -1,0 +1,48 @@
+<div class="{{css.topBar}}">
+  <img src="logo.png" class="{{css.topBar}}__logo" alt="AsyncAPI logo">
+  <span class="{{css.topBar}}__editor-text">editor</span>
+
+  <div class="{{css.topBar}}__buttons">
+    {{> button icon='fas fa-globe' href='https://asyncapi.com' title='Website' }}
+    {{> button icon='fab fa-github' href='https://github.com/asyncapi/asyncapi' title='Github' }}
+    {{> button icon='fab fa-slack' href='https://asyncapi.com/slack-invite' title='Slack' }}
+    {{> button icon='fas fa-question-circle' href='https://asyncapi.com/docs/specifications/latest' title='Reference' }}
+  </div>
+</div>
+
+<style>
+.{{css.topBar}} {
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 50px;
+  background-color: #607d8b;
+  padding: 0 15px;
+  border-bottom: #607d8b 2px solid;
+  line-height: 48px;
+  z-index: 10;
+}
+.{{css.topBar}}__logo {
+  height: 28px;
+  margin-top: 11px;
+  float: left;
+}
+.{{css.topBar}}__editor-text {
+  color: #eee;
+  font-weight: normal;
+  font-size: 20px;
+  font-style: italic;
+  float: left;
+  line-height: 50px;
+  margin-left: 8px;
+}
+.{{css.topBar}}__buttons {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-self: center;
+}
+</style>

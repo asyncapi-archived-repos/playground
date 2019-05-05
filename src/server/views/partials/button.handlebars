@@ -1,0 +1,44 @@
+<{{#if button}}button{{else}}a{{/if}}
+  {{#if button}}
+    {{#if submit}}
+      type="submit"
+    {{/if}}
+  {{/if}}
+
+  class="
+    button
+    {{#if class}}{{class}}{{/if}}
+
+    {{#if icon}}
+      button--icon
+      {{#if size}}
+        button--icon--{{size}}
+      {{/if}}
+    {{else}}
+      {{#if primary}}
+        button--primary
+      {{/if}}
+      {{#if regular}}
+        button--regular
+      {{/if}}
+      {{#if outline}}
+        button--outline
+      {{/if}}
+    {{/if}}
+  "
+  {{#unless button}}
+    {{#if href}}
+      href="{{href}}"
+      target="_blank"
+    {{/if}}
+  {{/unless}}
+  {{#if title}}
+  title="{{title}}"
+  {{/if}}
+>
+  {{#if icon}}
+    <i class="{{icon}}"></i>
+  {{/if}}
+
+  {{text}}
+</{{#if button}}button{{else}}a{{/if}}>

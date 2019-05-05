@@ -1,0 +1,54 @@
+<textarea id="{{id}}" name="{{name}}">
+{{> @partial-block}}
+</textarea>
+
+<script>
+(() => {
+  function notifyApp(value) {
+    var appEl = document.querySelector('{{app}}');
+    if (appEl) {
+      var event = new CustomEvent('onCodeChange', { detail: value });
+      appEl.dispatchEvent(event);
+    }
+  }
+
+  function onCodeChange(cm) {
+    notifyApp(cm.getValue());
+  }
+
+  var editor = CodeMirror.fromTextArea(document.getElementById('{{id}}'), {
+    mode: "text/yaml",
+    lineNumbers: true,
+    lineWrapping: true,
+    theme: 'material',
+    tabSize: 2,
+    indentWithTabs: false,
+    extraKeys: { Tab: betterTab }
+  });
+
+  {{#if globalVariable}}
+    window.{{globalVariable}} = editor;
+  {{/if}}
+
+  function betterTab(cm) {
+    if (cm.somethingSelected()) {
+      cm.indentSelection("add");
+    } else {
+      cm.replaceSelection(cm.getOption("indentWithTabs") ? "\t" :
+        Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+    }
+  }
+
+  editor.on('change', _.debounce(onCodeChange, 500));
+
+  try {
+    var doc = localStorage.getItem('doc-v2');
+    var result = localStorage.getItem('result-v2');
+    editor.setValue(doc);
+  } catch (e) {
+    console.error('Could not read previous document from localStorage.');
+
+    editor.setValue(document.getElementById('{{id}}').value);
+  }
+})();
+</script>
