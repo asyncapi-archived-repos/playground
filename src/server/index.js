@@ -30,7 +30,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Unexpected Error');
 });
 
-const server = app.listen(config.api.port);
+const server = app.listen(process.env.PORT || config.api.port);
 const shutdownManager = new GracefulShutdownManager(server);
 
 process.on('SIGTERM', () => {
