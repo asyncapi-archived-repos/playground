@@ -2,12 +2,12 @@
   <div class="{{css.leftPane}}__fetch-document">
     <form id="fetch-document" class="{{css.leftPane}}__fetch-document__row">
       <input required type="url" id="fetch-document-url" class="{{css.leftPane}}__fetch-document__input"
-        placeholder="Type the URL of the AsyncAPI document to fetch...">
-      {{>button button=true submit=true outline=true text='Fetch document' }}
+        placeholder="Type the URL of the AsyncAPI document to import...">
+      {{>button button=true submit=true outline=true text='Import document' }}
     </form>
     <div id="fetch-document-error" class="{{css.leftPane}}__fetch-document__error"></div>
   </div>
-  {{#>code-mirror id='code' app=app}}
+{{#>code-mirror id='code' app=app}}
 asyncapi: '2.0.0-rc1'
 id: 'urn:com:smartylighting:streetlights:server'
 info:
@@ -218,7 +218,7 @@ components:
     docs:
       externalDocs:
         url: https://company.com/docs#{{headerId}}
-  {{/code-mirror}}
+{{/code-mirror}}
 </div>
 <div class="js-collapse-{{css.leftPane}} {{css.leftPane}}__collapser"></div>
 
@@ -285,7 +285,7 @@ components:
   display: none;
   margin-top: 10px;
   padding: 10px;
-  background-color: #e53935;
+  background-color: #c1332f;
   color: white;
   text-align: center;
 }
@@ -293,39 +293,38 @@ components:
 .{{css.leftPane}}__fetch-document__error--visible {
   display: block;
 }
-
-.{{css.leftPane}} .CodeMirror {
-  height: 100%;
-  font-size: 16px;
-  font-family: 'Fira Code', monospace;
-}
 </style>
 
 <script>
 (() => {
+  const App = document.querySelector('{{app}}');
+  const ErrorPane = document.getElementById('fetch-document-error');
+  const FetchInput = document.getElementById('fetch-document-url');
+  const FetchForm = document.getElementById('fetch-document');
+
   document.querySelector('.js-collapse-{{css.leftPane}}').addEventListener('click', function () {
     document.querySelector('.{{css.leftPane}}').classList.toggle('{{css.leftPane}}--collapsed');
   });
 
-  document.getElementById('fetch-document').addEventListener('submit', function (ev) {
+  FetchInput.addEventListener('input', function (ev) {
+    ErrorPane.classList.remove('{{css.leftPane}}__fetch-document__error--visible');
+  });
+
+  FetchForm.addEventListener('submit', function (ev) {
     ev.preventDefault();
+    ErrorPane.classList.remove('{{css.leftPane}}__fetch-document__error--visible');
 
-    var errEl = document.getElementById('fetch-document-error');
-    errEl.classList.remove('left-panel__fetch-document__error--visible');
-
-    var url = document.getElementById('fetch-document-url').value;
-    fetch(url)
+    fetch(FetchInput.value)
       .then(function (response) {
         if (!response.ok) throw new Error(response.statusText);
         return response.text();
       })
       .then(function (doc) {
-        window.editor.setValue(doc);
+        App.dispatchEvent(new CustomEvent('updateCode', { detail: doc }));
       })
       .catch(function (err) {
-
-        errEl.innerText = err;
-        errEl.classList.add('left-panel__fetch-document__error--visible');
+        ErrorPane.innerText = err;
+        ErrorPane.classList.add('{{css.leftPane}}__fetch-document__error--visible');
         console.error(err);
       });
   });

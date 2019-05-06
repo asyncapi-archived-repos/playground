@@ -1,5 +1,30 @@
-<input type="radio" name="{{name}}" id="{{id}}" class="tab-radio" value="{{value}}" {{#if checked}}checked{{/if}}>
+<input type="radio" name="{{name}}" id="{{id}}" class="tab-radio" value="{{value}}" {{#if checked}}checked{{/if}} {{#if disabled}}disabled{{/if}}>
 <label for="{{id}}" class="tab">{{title}}</label>
+
+<style>
+.tab-radio {
+  display: none;
+}
+
+.tab {
+  display: inline-block;
+  border-radius: 0;
+  color: #abc1cc;
+  padding: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tab-radio:checked + .tab {
+  color: white;
+  border-bottom: white 2px solid;
+}
+
+.tab-radio:disabled + .tab {
+  opacity: .5;
+  cursor: default;
+}
+</style>
 
 <script>
 (() => {

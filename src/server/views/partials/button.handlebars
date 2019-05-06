@@ -42,3 +42,52 @@
 
   {{text}}
 </{{#if button}}button{{else}}a{{/if}}>
+
+<style>
+.button {
+  background-color: transparent;
+  color: #abc1cc;
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 15px;
+  text-decoration: none;
+}
+.button:hover {
+  color: white;
+}
+
+.button--regular {
+  background-color: #607d8b;
+}
+
+.button--primary {
+  background-color: #38C172;
+}
+
+.button--outline {
+  border: #abc1cc 1px solid;
+}
+.button--outline:hover {
+  border: #fff 1px solid;
+}
+
+.button--icon {
+  font-size: 22px;
+  font-weight: normal;
+  padding: 0;
+  color: #abc1cc;
+}
+.button--icon:hover {
+  color: white;
+}
+
+.button--icon--small {
+  font-size: 18px;
+}
+</style>

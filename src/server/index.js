@@ -7,6 +7,7 @@ const config = require('./lib/config');
 const handlebarsHelpers = require('./lib/handlebars');
 const app = express();
 const htmlRoute = require('./routes/html');
+const markdownRoute = require('./routes/markdown');
 
 app.use(bodyParser.text({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,9 +20,10 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 app.get('/', (req, res) => {
-  res.render('home', config.views);
+  res.render('app', config.views);
 });
 app.use('/html', htmlRoute);
+app.use('/markdown', markdownRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);

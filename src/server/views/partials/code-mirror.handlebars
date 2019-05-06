@@ -2,33 +2,31 @@
 {{> @partial-block}}
 </textarea>
 
+<style>
+  #{{id}} {
+    display: none;
+  }
+
+  .CodeMirror {
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Fira Code', monospace;
+  }
+</style>
+
 <script>
-(() => {
+window.addEventListener('load', () => {
+  const App = document.querySelector('{{app}}');
+
   function notifyApp(value) {
-    var appEl = document.querySelector('{{app}}');
-    if (appEl) {
-      var event = new CustomEvent('onCodeChange', { detail: value });
-      appEl.dispatchEvent(event);
+    if (App) {
+      App.dispatchEvent(new CustomEvent('onCodeChange', { detail: value }));
     }
   }
 
   function onCodeChange(cm) {
     notifyApp(cm.getValue());
   }
-
-  var editor = CodeMirror.fromTextArea(document.getElementById('{{id}}'), {
-    mode: "text/yaml",
-    lineNumbers: true,
-    lineWrapping: true,
-    theme: 'material',
-    tabSize: 2,
-    indentWithTabs: false,
-    extraKeys: { Tab: betterTab }
-  });
-
-  {{#if globalVariable}}
-    window.{{globalVariable}} = editor;
-  {{/if}}
 
   function betterTab(cm) {
     if (cm.somethingSelected()) {
@@ -39,7 +37,21 @@
     }
   }
 
+  const editor = CodeMirror.fromTextArea(document.getElementById('{{id}}'), {
+    mode: "text/yaml",
+    lineNumbers: true,
+    lineWrapping: true,
+    theme: 'material',
+    tabSize: 2,
+    indentWithTabs: false,
+    extraKeys: { Tab: betterTab }
+  });
+
   editor.on('change', _.debounce(onCodeChange, 500));
+
+  App.addEventListener('updateCode', (ev) => {
+    editor.setValue(ev.detail);
+  });
 
   try {
     var doc = localStorage.getItem('doc-v2');
@@ -50,5 +62,5 @@
 
     editor.setValue(document.getElementById('{{id}}').value);
   }
-})();
+});
 </script>
