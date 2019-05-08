@@ -20,7 +20,12 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 app.get('/', (req, res) => {
-  res.render('app', config.views);
+  res.render('app', {
+    ...config.views,
+    ...{
+      embedded: !!req.query.embed,
+    }
+  });
 });
 app.use('/html', htmlRoute);
 app.use('/markdown', markdownRoute);

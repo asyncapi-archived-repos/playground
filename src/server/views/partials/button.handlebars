@@ -9,6 +9,10 @@
     button
     {{#if class}}{{class}}{{/if}}
 
+    {{#if bold}}
+      button--bold
+    {{/if}}
+
     {{#if icon}}
       button--icon
       {{#if size}}
@@ -36,11 +40,21 @@
   title="{{title}}"
   {{/if}}
 >
+  {{#if (eq textPosition 'before-icon')}}
+  <span class="button__text button__text--left">{{text}}</span>
+  {{/if}}
+
   {{#if icon}}
     <i class="{{icon}}"></i>
   {{/if}}
 
+  {{#if (eq textPosition 'after-icon')}}
+  <span class="button__text button__text--right">{{text}}</span>
+  {{/if}}
+
+  {{#unless textPosition}}
   {{text}}
+  {{/unless}}
 </{{#if button}}button{{else}}a{{/if}}>
 
 <style>
@@ -78,6 +92,9 @@
 }
 
 .button--icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   font-size: 22px;
   font-weight: normal;
   padding: 0;
@@ -89,5 +106,21 @@
 
 .button--icon--small {
   font-size: 18px;
+}
+
+.button--bold {
+  font-weight: bold;
+}
+
+.button__text {
+  font-size: 14px;
+}
+
+.button__text--left {
+  padding-right: 10px;
+}
+
+.button__text--right {
+  padding-left: 10px;
 }
 </style>

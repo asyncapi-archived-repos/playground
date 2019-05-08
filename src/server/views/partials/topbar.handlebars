@@ -8,6 +8,12 @@
     {{> button icon='fab fa-slack' href='https://asyncapi.com/slack-invite' title='Slack' }}
     {{> button icon='fas fa-question-circle' href='https://asyncapi.com/docs/specifications/latest' title='Reference' }}
   </div>
+
+  {{#if embedded}}
+  <div class="{{css.topBar}}__buttons">
+    {{> button icon='fas fa-expand-arrows-alt' title='Open in a new tab' text="Open in a new tab" textPosition="before-icon" bold=true class="expand-button" }}
+  </div>
+  {{/if}}
 </div>
 
 <style>
@@ -46,3 +52,15 @@
   align-self: center;
 }
 </style>
+
+<script>
+(() => {
+  const expandButtons = document.querySelectorAll('.expand-button');
+  if (expandButtons && expandButtons.length) {
+    for (let i=0; i < expandButtons.length; i++) {
+      expandButtons[i].setAttribute('href', window.location.origin);
+      expandButtons[i].setAttribute('target', '_blank');
+    }
+  }
+})();
+</script>
