@@ -1,6 +1,8 @@
 <div class="{{css.topBar}}">
-  <img src="logo.png" class="{{css.topBar}}__logo" alt="AsyncAPI logo">
-  <span class="{{css.topBar}}__editor-text">playground</span>
+  <div class="{{css.topBar}}__brand">
+    <img src="logo.png" class="{{css.topBar}}__logo" alt="AsyncAPI logo">
+    <span class="{{css.topBar}}__editor-text">playground</span>
+  </div>
 
   <div class="{{css.topBar}}__buttons">
     {{> button icon='fas fa-globe' href='https://asyncapi.com' title='Website' }}
@@ -46,7 +48,7 @@
 }
 .{{css.topBar}}__buttons {
   display: flex;
-  flex: 1;
+  flex-grow: 1;
   flex-direction: row;
   justify-content: flex-end;
   align-self: center;
