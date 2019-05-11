@@ -43,3 +43,16 @@ process.on('SIGTERM', () => {
     console.log('Server has been gracefully terminated');
   });
 });
+
+process.on('SIGINT', () => {
+  shutdownManager.terminate(() => {
+    console.log('Server has been gracefully terminated');
+  });
+});
+
+process.on('SIGHUP', () => {
+  shutdownManager.terminate(() => {
+    console.log('Server has been gracefully terminated');
+  });
+});
+
