@@ -8,6 +8,7 @@ const handlebarsHelpers = require('./lib/handlebars');
 const app = express();
 const htmlRoute = require('./routes/html');
 const markdownRoute = require('./routes/markdown');
+const convertRoute = require('./routes/convert');
 
 app.use(bodyParser.text({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 });
 app.use('/html', htmlRoute);
 app.use('/markdown', markdownRoute);
+app.use('/convert', convertRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);

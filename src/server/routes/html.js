@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const generator = require('asyncapi-generator');
 const archiver = require('archiver');
+const version = require('../middlewares/version');
 
 module.exports = router;
 
-router.post('/generate', async (req, res) => {
+router.post('/generate', version, async (req, res) => {
   try {
     const html = await generator.generateTemplateFile({
       template: 'html',
@@ -57,7 +58,7 @@ router.get('/template/js/*', async (req, res) => {
   }
 });
 
-router.post('/download', async (req, res, next) => {
+router.post('/download', version, async (req, res, next) => {
   const archive = archiver('zip');
   res.attachment('asyncapi.zip');
   archive.pipe(res);
