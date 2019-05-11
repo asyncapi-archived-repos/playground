@@ -93,6 +93,19 @@
         });
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('load')) {
+      fetch(urlParams.get('load'))
+        .then(function (response) {
+          if (!response.ok) throw new Error(response.statusText);
+          return response.text();
+        })
+        .then(function (doc) {
+          App.dispatchEvent(new CustomEvent('updateCode', { detail: doc }));
+        })
+        .catch(console.error);
+    }
+
     App.addEventListener('templateChange', (e) => {
       state.template = e.detail;
       generate();
