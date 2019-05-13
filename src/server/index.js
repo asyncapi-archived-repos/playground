@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const { GracefulShutdownManager } = require('@moebius/http-graceful-shutdown');
 const exphbs = require('express-handlebars');
-const morganBody = require('morgan-body');
 const config = require('./lib/config');
 const handlebarsHelpers = require('./lib/handlebars');
 const app = express();
@@ -20,10 +19,15 @@ app.engine('handlebars', exphbs({
   helpers: handlebarsHelpers,
 }));
 app.set('view engine', 'handlebars');
-morganBody(app, {
-  skip: (req, res) => {
-    return req.method !== 'POST';
+
+app.use((req, res, next) => {
+  if (req.method === 'POST') {
+    console.log('==================');
+    console.log(req.body);
+    console.log('==================');
   }
+
+  next();
 });
 
 app.get('/', (req, res) => {
