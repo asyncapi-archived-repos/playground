@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "js-yaml": "^3.13.1",
+    "json-schema-ref-parser": "^6.1.0",
     "node-yaml-config": "0.0.5"
   }
 }

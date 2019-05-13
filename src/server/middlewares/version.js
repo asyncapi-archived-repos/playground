@@ -1,4 +1,5 @@
 const yaml = require('js-yaml');
+const RefParser = require('json-schema-ref-parser');
 
 module.exports = (req, res, next) => {
   if (req.body) {
@@ -13,6 +14,17 @@ module.exports = (req, res, next) => {
         return next();
       }
     }
+
+    const parser = new RefParser();
+    parser.dereference(doc)
+      .then(() => {
+        if (parser.$refs.circular) {
+          console.log('>>>>>>>>>>>>>>>>> The schema contains circular references');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     if (doc && doc.asyncapi && doc.asyncapi.startsWith('1.')) {
       return res.status(422).send({
