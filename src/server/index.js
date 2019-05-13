@@ -20,7 +20,11 @@ app.engine('handlebars', exphbs({
   helpers: handlebarsHelpers,
 }));
 app.set('view engine', 'handlebars');
-morganBody(app);
+morganBody(app, {
+  skip: (req, res) => {
+    return req.method !== 'POST';
+  }
+});
 
 app.get('/', (req, res) => {
   res.render('app', {
