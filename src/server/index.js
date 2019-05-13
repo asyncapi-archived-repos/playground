@@ -23,6 +23,8 @@ app.set('view engine', 'handlebars');
 app.use((req, res, next) => {
   if (req.method === 'POST') {
     console.log('==================');
+    console.log('POST', req.url);
+    console.log('==================');
     console.log(req.body);
     console.log('==================');
   }
