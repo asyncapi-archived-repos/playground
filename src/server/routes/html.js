@@ -3,10 +3,11 @@ const router = express.Router();
 const generator = require('asyncapi-generator');
 const archiver = require('archiver');
 const version = require('../middlewares/version');
+const circularMiddleware = require('../middlewares/circular');
 
 module.exports = router;
 
-router.post('/generate', version, async (req, res) => {
+router.post('/generate', circularMiddleware, version, async (req, res) => {
   try {
     const html = await generator.generateTemplateFile({
       template: 'html',
