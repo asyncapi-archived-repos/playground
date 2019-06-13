@@ -27,7 +27,7 @@ router.post('/generate', circularMiddleware, version, async (req, res) => {
   }
 });
 
-router.post('/download', version, async (req, res, next) => {
+router.post('/download', circularMiddleware, version, async (req, res, next) => {
   const archive = archiver('zip');
   res.attachment('asyncapi.zip');
   archive.pipe(res);

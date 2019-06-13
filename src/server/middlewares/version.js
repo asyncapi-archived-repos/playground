@@ -1,5 +1,4 @@
 const yaml = require('js-yaml');
-const RefParser = require('json-schema-ref-parser');
 
 module.exports = (req, res, next) => {
   if (req.body) {
@@ -15,21 +14,18 @@ module.exports = (req, res, next) => {
       }
     }
 
-    const parser = new RefParser();
-    parser.dereference(doc)
-      .then(() => {
-        if (parser.$refs.circular) {
-          console.log('>>>>>>>>>>>>>>>>> The schema contains circular references');
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    if (doc && doc.asyncapi && doc.asyncapi.startsWith('1.')) {
+    try {
+      if (doc && doc.asyncapi && doc.asyncapi.startsWith('1.')) {
+        return res.status(422).send({
+          code: 'old-version',
+          message: `Version ${doc.asyncapi} is not supported. Please convert it to a newer version.`,
+        });
+      }
+    } catch (e) {
+      console.error(e);
       return res.status(422).send({
-        code: 'old-version',
-        message: `Version ${doc.asyncapi} is not supported. Please convert it to a newer version.`,
+        code: 'unexpected',
+        message: 'Unexpected error',
       });
     }
   }

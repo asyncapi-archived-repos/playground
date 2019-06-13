@@ -15,26 +15,34 @@ module.exports = (req, res, next) => {
       }
     }
 
-    const parser = new RefParser();
-    parser.dereference(doc)
-      .then(() => {
-        if (parser.$refs.circular) {
-          console.error('The schema contains circular references');
-          return res.status(422).send({
-            code: 'invalid',
-            message: 'The document contains circular references.',
-          });
-        }
+    try {
+      const parser = new RefParser();
+      parser.dereference(doc)
+        .then(() => {
+          if (parser.$refs.circular) {
+            console.error('The schema contains circular references');
+            return res.status(422).send({
+              code: 'invalid',
+              message: 'The document contains circular references.',
+            });
+          }
 
-        next();
-      })
-      .catch((err) => {
-        console.error(err);
-        return res.status(422).send({
-          code: 'unexpected',
-          message: err.message || 'Unexpected error',
+          next();
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.status(422).send({
+            code: 'unexpected',
+            message: err.message || 'Unexpected error',
+          });
         });
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({
+        code: 'unexpected',
+        message: 'Unexpected error',
       });
+    }
   } else {
     next();
   }
