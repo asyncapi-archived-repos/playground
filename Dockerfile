@@ -13,4 +13,6 @@ RUN npm install
 
 EXPOSE 5000
 
-CMD [ "npm", "start" ]
+RUN npm install -g forever
+
+CMD [ "forever", "start", "-c", "npm", "start", "/usr/src/app/" ]
