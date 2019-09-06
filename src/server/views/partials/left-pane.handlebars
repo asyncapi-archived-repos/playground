@@ -8,7 +8,7 @@
     <div id="fetch-document-error" class="{{css.leftPane}}__fetch-document__error"></div>
   </div>
 {{#>code-mirror id='code' app=app}}
-asyncapi: '2.0.0-rc1'
+asyncapi: '2.0.0-rc2'
 id: 'urn:com:smartylighting:streetlights:server'
 info:
   title: Streetlights API
@@ -26,10 +26,10 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
 
 servers:
-  - url: api.streetlights.smartylighting.com:{port}
+  production:
+    url: api.streetlights.smartylighting.com:{port}
     protocol: mqtt
     description: Test broker
-    baseChannel: smartylighting/streetlights/1/0
     variables:
       port:
         description: Secure connection (TLS) is available through port 8883.
@@ -48,53 +48,49 @@ servers:
 defaultContentType: application/json
 
 channels:
-  event/{streetlightId}/lighting/measured:
+  smartylighting/streetlights/1/0/event/{streetlightId}/lighting/measured:
     description: The topic on which measured values may be produced and consumed.
     parameters:
-      - $ref: '#/components/parameters/streetlightId'
+      streetlightId:
+        $ref: '#/components/parameters/streetlightId'
     subscribe:
       summary: Receive information about environmental lighting conditions of a particular streetlight.
       operationId: receiveLightMeasurement
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'lighting-measured'
+        - $ref: '#/components/operationTraits/kafka'
       message:
         $ref: '#/components/messages/lightMeasured'
 
-  action/{streetlightId}/turn/on:
+  smartylighting/streetlights/1/0/action/{streetlightId}/turn/on:
     parameters:
-      - $ref: '#/components/parameters/streetlightId'
+      streetlightId:
+        $ref: '#/components/parameters/streetlightId'
     publish:
       operationId: turnOn
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'turn-on'
+        - $ref: '#/components/operationTraits/kafka'
       message:
         $ref: '#/components/messages/turnOnOff'
 
-  action/{streetlightId}/turn/off:
+  smartylighting/streetlights/1/0/action/{streetlightId}/turn/off:
     parameters:
-      - $ref: '#/components/parameters/streetlightId'
+      streetlightId:
+        $ref: '#/components/parameters/streetlightId'
     publish:
       operationId: turnOff
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'turn-off'
+        - $ref: '#/components/operationTraits/kafka'
       message:
         $ref: '#/components/messages/turnOnOff'
 
-  action/{streetlightId}/dim:
+  smartylighting/streetlights/1/0/action/{streetlightId}/dim:
     parameters:
-      - $ref: '#/components/parameters/streetlightId'
+      streetlightId:
+        $ref: '#/components/parameters/streetlightId'
     publish:
       operationId: dimLight
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'dim'
+        - $ref: '#/components/operationTraits/kafka'
       message:
         $ref: '#/components/messages/dimLight'
 
@@ -106,9 +102,7 @@ components:
       summary: Inform about environmental lighting conditions for a particular streetlight.
       contentType: application/json
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'message-light-measured'
+        - $ref: '#/components/messageTraits/commonHeaders'
       payload:
         $ref: "#/components/schemas/lightMeasuredPayload"
     turnOnOff:
@@ -116,9 +110,7 @@ components:
       title: Turn on/off
       summary: Command a particular streetlight to turn the lights on or off.
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'message-turn-on-off'
+        - $ref: '#/components/messageTraits/commonHeaders'
       payload:
         $ref: "#/components/schemas/turnOnOffPayload"
     dimLight:
@@ -126,9 +118,7 @@ components:
       title: Dim light
       summary: Command a particular streetlight to dim the lights.
       traits:
-        -
-          - $ref: '#/components/traits/docs'
-          - headerId: 'message-dim-light'
+        - $ref: '#/components/messageTraits/commonHeaders'
       payload:
         $ref: "#/components/schemas/dimLightPayload"
 
@@ -209,15 +199,25 @@ components:
 
   parameters:
     streetlightId:
-      name: streetlightId
       description: The ID of the streetlight.
       schema:
         type: string
 
-  traits:
-    docs:
-      externalDocs:
-        url: https://company.com/docs#{{headerId}}
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          my-app-header:
+            type: integer
+            minimum: 0
+            maximum: 100
+
+  operationTraits:
+    kafka:
+      bindings:
+        kafka:
+          clientId: my-app-id
 {{/code-mirror}}
 </div>
 <div class="js-collapse-{{css.leftPane}} {{css.leftPane}}__collapser"></div>
