@@ -5,8 +5,8 @@
 
   <div id="convert-dialog" class="hidden">
     <img src="/img/rocket-launch.png">
-    <h2>Convert to 2.0.0-rc1</h2>
-    <p>Your document is using an old version of AsyncAPI. The playground only supports 2.0.0-rc1 and above. Convert your
+    <h2>Convert to 2.0.0-rc2</h2>
+    <p>Your document is using an old version of AsyncAPI. The playground only supports 2.0.0-rc2 and above. Convert your
       document to continue.</p>
     <div>
       {{>button button=true class="js-convert" style="margin-left:0;color:white;font-size:16px;padding:10px 15px;font-weight:normal;" text='Convert now' primary=true}}
@@ -61,13 +61,12 @@
         .set('Content-Type', 'text/plain')
         .end((err, res) => {
           if (err) {
-            if (res.body.code === 'old-version') {
+            if (res.body && res.body.code === 'old-version') {
               const convertDialog = document.getElementById('convert-dialog');
               convertDialog.classList.remove('hidden');
             } else {
               const errorsEl = document.getElementById('document-errors');
               const errorWrapperEl = document.querySelector('.errors-wrapper');
-
               errorsEl.innerHTML = res.body.errors ? JSON.stringify(res.body.errors, null, 2) : res.body.message;
               errorWrapperEl.classList.remove('errors-wrapper--old-version');
               errorWrapperEl.classList.remove('errors-wrapper--hidden');
