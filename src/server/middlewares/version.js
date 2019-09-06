@@ -1,29 +1,38 @@
-const yaml = require('js-yaml');
+const AsyncAPIParser = require('asyncapi-parser');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   if (req.body) {
     let doc;
 
     try {
-      doc = yaml.safeLoad(req.body);
+      doc = await AsyncAPIParser.parse(req.body, {
+        resolve: {
+          file: false,
+        },
+        dereference: {
+          circular: 'ignore',
+        }
+      });
     } catch (e) {
-      try {
-        doc = JSON.parse(req.body);
-      } catch (err) {
-        return next();
-      }
+      return next(e);
     }
 
     try {
-      if (doc && doc.asyncapi && doc.asyncapi.startsWith('1.')) {
+      if (doc && doc.version().startsWith('1.')) {
         return res.status(422).send({
           code: 'old-version',
-          message: `Version ${doc.asyncapi} is not supported. Please convert it to a newer version.`,
+          message: `Version ${doc.version()} is not supported. Please convert it to a newer version.`,
+        });
+      }
+      if (doc && doc.version() === '2.0.0-rc1') {
+        return res.status(422).send({
+          code: 'unsupported-version',
+          message: `Version ${doc.version()} is not supported. Only the latest release candidate version is supported until 2.0.0 is released.`,
         });
       }
     } catch (e) {
       console.error(e);
-      return res.status(422).send({
+      return res.status(500).send({
         code: 'unexpected',
         message: 'Unexpected error',
       });
