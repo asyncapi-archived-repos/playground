@@ -46,10 +46,14 @@ app.use('/convert', convertRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).send({
+
+  const error = {
     code: err.code || 'unexpected',
     message: err.message || 'Unexpected error',
-  });
+  };
+  if (err.errors) error.errors = err.errors;
+
+  res.status(500).send(error);
 });
 
 const server = app.listen(process.env.PORT || config.api.port);

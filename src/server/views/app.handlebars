@@ -72,6 +72,9 @@
               errorWrapperEl.classList.remove('errors-wrapper--hidden');
             }
             return;
+          } else {
+            const errorsEl = document.getElementById('document-errors');
+            errorsEl.innerHTML = '';
           }
 
           var result = res.text;
