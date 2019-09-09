@@ -14,6 +14,7 @@ module.exports = async (req, res, next) => {
         }
       });
     } catch (e) {
+      e.code = 'invalid';
       return next(e);
     }
 
@@ -31,11 +32,7 @@ module.exports = async (req, res, next) => {
         });
       }
     } catch (e) {
-      console.error(e);
-      return res.status(500).send({
-        code: 'unexpected',
-        message: 'Unexpected error',
-      });
+      return next(e);
     }
   }
 
