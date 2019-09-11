@@ -1,5 +1,22 @@
 const AsyncAPIParser = require('asyncapi-parser');
 
+function checkVersion (doc, res) {
+  if (doc && doc.asyncapi.startsWith('1.')) {
+    return res.status(422).send({
+      code: 'old-version',
+      message: `Version ${doc.asyncapi} is not supported. Please convert it to a newer version.`,
+    });
+  }
+  if (doc && doc.asyncapi.startsWith('2.0.0-rc')) {
+    return res.status(422).send({
+      code: 'unsupported-version',
+      message: `Version ${doc.asyncapi} is not supported. Use version 2.0.0 instead.`,
+    });
+  }
+
+  return false;
+}
+
 module.exports = async (req, res, next) => {
   if (req.body) {
     let doc;
@@ -13,28 +30,14 @@ module.exports = async (req, res, next) => {
           circular: 'ignore',
         }
       });
+
+      checkVersion(doc.json(), res);
+      next();
     } catch (e) {
       e.code = 'invalid';
-      return next(e);
-    }
-
-    try {
-      if (doc && doc.version().startsWith('1.')) {
-        return res.status(422).send({
-          code: 'old-version',
-          message: `Version ${doc.version()} is not supported. Please convert it to a newer version.`,
-        });
+      if (checkVersion(e.parsedJSON, res) === false) {
+        return next(e);
       }
-      if (doc && doc.version() === '2.0.0-rc1') {
-        return res.status(422).send({
-          code: 'unsupported-version',
-          message: `Version ${doc.version()} is not supported. Only the latest release candidate version is supported until 2.0.0 is released.`,
-        });
-      }
-    } catch (e) {
-      return next(e);
     }
   }
-
-  next();
 };

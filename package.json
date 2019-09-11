@@ -15,7 +15,7 @@
     "archiver": "^3.0.0",
     "asyncapi-converter": "^0.3.2",
     "asyncapi-generator": "^0.16.0",
-    "asyncapi-parser": "^0.10.0",
+    "asyncapi-parser": "^0.11.1",
     "body-parser": "^1.17.2",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
