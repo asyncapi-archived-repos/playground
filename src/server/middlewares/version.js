@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     let doc;
 
     try {
-      doc = await AsyncAPIParser.parse(req.body.data, {
+      doc = await AsyncAPIParser.parse(req.body, {
         resolve: {
           file: false,
         },
