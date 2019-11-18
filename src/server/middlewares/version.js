@@ -1,13 +1,13 @@
 const AsyncAPIParser = require('asyncapi-parser');
 
 function checkVersion (doc, res) {
-  if (doc && doc.asyncapi.startsWith('1.')) {
+  if (doc && doc.asyncapi && doc.asyncapi.startsWith('1.')) {
     return res.status(422).send({
       code: 'old-version',
       message: `Version ${doc.asyncapi} is not supported. Please convert it to a newer version.`,
     });
   }
-  if (doc && doc.asyncapi.startsWith('2.0.0-rc')) {
+  if (doc && doc.asyncapi && doc.asyncapi.startsWith('2.0.0-rc')) {
     return res.status(422).send({
       code: 'unsupported-version',
       message: `Version ${doc.asyncapi} is not supported. Use version 2.0.0 instead.`,
@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     let doc;
 
     try {
-      doc = await AsyncAPIParser.parse(req.body, {
+      doc = await AsyncAPIParser.parse(req.body.data, {
         resolve: {
           file: false,
         },
