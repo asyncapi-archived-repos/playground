@@ -14,7 +14,7 @@
     "@moebius/http-graceful-shutdown": "^1.1.0",
     "archiver": "^3.0.0",
     "asyncapi-converter": "^0.3.2",
-    "asyncapi-generator": "^0.24.1",
+    "asyncapi-generator": "^0.25.1",
     "asyncapi-parser": "^0.12.0",
     "body-parser": "^1.17.2",
     "express": "^4.16.4",
