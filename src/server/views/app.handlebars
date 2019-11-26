@@ -157,5 +157,9 @@
           App.dispatchEvent(new CustomEvent('updateCode', { detail: res.text }));
         });
     });
+
+    document.getElementById("fetch-document-url").value = "http://localhost:3080/apidoc/mqtt.yml";
+    document.forms["fetch-document"].children[1].click();
+
   });
 </script>

@@ -13,6 +13,7 @@ const convertRoute = require('./routes/convert');
 app.use(bodyParser.text({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../../public')));
+app.use('/apidoc', express.static('/apidoc'));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
