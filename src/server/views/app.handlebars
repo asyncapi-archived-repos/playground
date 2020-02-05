@@ -50,6 +50,7 @@
 
     const state = {
       code: null,
+      url: null,
       template: 'html',
     };
 
@@ -98,6 +99,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('load')) {
+      document.getElementById('fetch-document-url').value = urlParams.get('load'); 
       fetch(urlParams.get('load'))
         .then(function (response) {
           if (!response.ok) throw new Error(response.statusText);
