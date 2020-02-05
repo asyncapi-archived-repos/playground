@@ -59,6 +59,7 @@
         .send(state.code)
         .set('Accept', 'text/plain')
         .set('Content-Type', 'text/plain')
+        .set('AsyncAPI.baseUrl', state.url)
         .end((err, res) => {
           if (err) {
             if (res.body && res.body.code === 'old-version') {
@@ -116,6 +117,7 @@
     App.addEventListener('onCodeChange', (e) => {
       if (String(e.detail).trim().length) {
         state.code = e.detail;
+        state.url = document.getElementById('fetch-document-url').value;
         generate();
       }
     });

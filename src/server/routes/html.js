@@ -13,7 +13,7 @@ router.post('/generate', version, async (req, res) => {
       entrypoint: 'index.html',
       output: 'string',
     });
-    const html = await generator.generateFromString(req.body);
+    const html = await generator.generateFromString(req.body, req.header('AsyncAPI.baseUrl') || null);
 
     res.send(html);
   } catch (e) {
