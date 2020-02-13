@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
 
     try {
       doc = await AsyncAPIParser.parse(req.body, {
-        path: req.header('AsyncAPI.baseUrl'),
+        path: req.header('x-asyncapi-base-url'),
         resolve: {
           file: false,
         },

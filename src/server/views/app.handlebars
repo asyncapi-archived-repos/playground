@@ -60,7 +60,7 @@
         .send(state.code)
         .set('Accept', 'text/plain')
         .set('Content-Type', 'text/plain')
-        .set('AsyncAPI.baseUrl', state.url)
+        .set('x-asyncapi-base-url', state.url)
         .end((err, res) => {
           if (err) {
             if (res.body && res.body.code === 'old-version') {
