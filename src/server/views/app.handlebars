@@ -50,6 +50,7 @@
 
     const state = {
       code: null,
+      url: null,
       template: 'html',
     };
 
@@ -59,6 +60,7 @@
         .send(state.code)
         .set('Accept', 'text/plain')
         .set('Content-Type', 'text/plain')
+        .set('x-asyncapi-base-url', state.url)
         .end((err, res) => {
           if (err) {
             if (res.body && res.body.code === 'old-version') {
@@ -97,6 +99,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('load')) {
+      document.getElementById('fetch-document-url').value = urlParams.get('load'); 
       fetch(urlParams.get('load'))
         .then(function (response) {
           if (!response.ok) throw new Error(response.statusText);
@@ -116,6 +119,7 @@
     App.addEventListener('onCodeChange', (e) => {
       if (String(e.detail).trim().length) {
         state.code = e.detail;
+        state.url = document.getElementById('fetch-document-url').value;
         generate();
       }
     });
