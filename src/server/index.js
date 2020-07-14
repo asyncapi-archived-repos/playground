@@ -10,7 +10,7 @@ const htmlRoute = require('./routes/html');
 const markdownRoute = require('./routes/markdown');
 const convertRoute = require('./routes/convert');
 
-app.use(bodyParser.text({ type: 'text/plain' }));
+app.use(bodyParser.text({ type: 'text/plain', limit: '500kb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../../public')));
 app.set('views', path.join(__dirname, 'views'));
