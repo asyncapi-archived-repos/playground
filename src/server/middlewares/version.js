@@ -1,4 +1,5 @@
-const AsyncAPIParser = require('asyncapi-parser');
+const AsyncAPIParser = require('@asyncapi/parser');
+const AvroSchemaParser = require('@asyncapi/avro-schema-parser');
 
 function checkVersion (doc, res) {
   if (doc && doc.asyncapi && doc.asyncapi.startsWith('1.')) {
@@ -19,22 +20,27 @@ function checkVersion (doc, res) {
 
 module.exports = async (req, res, next) => {
   if (req.body) {
-    let doc;
+    let parsed
+
+    const parserOptions = {
+      resolve: {
+        file: false,
+        http: {
+          headers: {
+            Cookie: req.header('Cookie'),
+          },
+          withCredentials: true,
+        },
+      },
+    };
 
     try {
-      doc = await AsyncAPIParser.parse(req.body, {
-        path: req.header('x-asyncapi-base-url'),
-        resolve: {
-          file: false,
-        },
-        dereference: {
-          circular: 'ignore',
-        }
-      });
-
-      checkVersion(doc.json(), res);
+      AsyncAPIParser.registerSchemaParser(AvroSchemaParser);
+      parsed = await AsyncAPIParser.parse(req.body, parserOptions);
+      checkVersion(parsed.json(), res);
       next();
     } catch (e) {
+      console.error(e);
       e.code = 'invalid';
       if (checkVersion(e.parsedJSON, res) === false) {
         return next(e);

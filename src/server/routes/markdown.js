@@ -1,7 +1,7 @@
 const os = require('os');
 const express = require('express');
 const router = express.Router();
-const AsyncAPIGenerator = require('asyncapi-generator');
+const AsyncAPIGenerator = require('@asyncapi/generator');
 const archiver = require('archiver');
 const version = require('../middlewares/version');
 
@@ -9,11 +9,24 @@ module.exports = router;
 
 router.post('/generate', version, async (req, res) => {
   try {
-    const generator = new AsyncAPIGenerator('markdown', os.tmpdir(), {
+    const parserOptions = {
+      resolve: {
+        file: false,
+        http: {
+          headers: {
+            Cookie: req.header('Cookie'),
+          },
+          withCredentials: true,
+        },
+      },
+    };
+
+    const generator = new AsyncAPIGenerator('@asyncapi/markdown-template', os.tmpdir(), {
       entrypoint: 'asyncapi.md',
       output: 'string',
+      forceWrite: true,
     });
-    const markdown = await generator.generateFromString(req.body);
+    const markdown = await generator.generateFromString(req.body, parserOptions);
 
     res.send(markdown);
   } catch (e) {
@@ -32,9 +45,10 @@ router.post('/download', async (req, res, next) => {
 
   archive.append(req.body.data, { name: 'asyncapi.yml' });
   try {
-    const generator = new AsyncAPIGenerator('markdown', os.tmpdir(), {
+    const generator = new AsyncAPIGenerator('@asyncapi/markdown-template', os.tmpdir(), {
       entrypoint: 'asyncapi.md',
       output: 'string',
+      forceWrite: true,
     });
     const markdown = await generator.generateFromString(req.body.data);
     archive.append(markdown, { name: 'asyncapi.md' });
