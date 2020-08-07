@@ -97,10 +97,9 @@
         });
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('load')) {
-      document.getElementById('fetch-document-url').value = urlParams.get('load'); 
-      fetch(urlParams.get('load'))
+    function preloadURL(url) {
+      document.getElementById('fetch-document-url').value = url;
+      fetch(url)
         .then(function (response) {
           if (!response.ok) throw new Error(response.statusText);
           return response.text();
@@ -109,6 +108,16 @@
           App.dispatchEvent(new CustomEvent('updateCode', { detail: doc }));
         })
         .catch(console.error);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('load')) {
+      preloadURL(url);
+    } else {
+      const defaultURL = "{{ defaultURL }}";
+      if (defaultURL) {
+        preloadURL(defaultURL);
+      }
     }
 
     App.addEventListener('templateChange', (e) => {

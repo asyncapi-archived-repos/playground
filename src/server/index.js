@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
     ...config.views,
     ...{
       embedded: !!req.query.embed,
+      defaultURL: process.env.DEFAULT_SPEC_URL
     }
   });
 });
