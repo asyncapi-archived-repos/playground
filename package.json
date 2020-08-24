@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^0.2.0",
-    "@asyncapi/generator": "^1.0.0-rc.7",
+    "@asyncapi/generator": "^1.0.0-rc.10",
     "@asyncapi/html-template": "^0.9.0",
     "@asyncapi/markdown-template": "^0.9.0",
     "@asyncapi/parser": "^0.28.1",
