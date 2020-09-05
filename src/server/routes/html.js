@@ -18,8 +18,9 @@ router.post('/generate', version, async (req, res) => {
             Cookie: req.header('Cookie'),
           },
           withCredentials: true,
-        },
+        }
       },
+      path: req.header('x-asyncapi-base-url')
     };
 
     const generator = new AsyncAPIGenerator('@asyncapi/html-template', os.tmpdir(), {

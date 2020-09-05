@@ -30,8 +30,9 @@ module.exports = async (req, res, next) => {
             Cookie: req.header('Cookie'),
           },
           withCredentials: true,
-        },
+        }
       },
+      path: req.header('x-asyncapi-base-url')
     };
 
     try {

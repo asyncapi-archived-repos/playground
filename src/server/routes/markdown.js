@@ -19,6 +19,7 @@ router.post('/generate', version, async (req, res) => {
           withCredentials: true,
         },
       },
+      path: req.header('x-asyncapi-base-url')
     };
 
     const generator = new AsyncAPIGenerator('@asyncapi/markdown-template', os.tmpdir(), {
