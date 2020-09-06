@@ -32,7 +32,7 @@ module.exports = async (req, res, next) => {
           withCredentials: true,
         }
       },
-      path: req.header('x-asyncapi-base-url')
+      path: req.header('x-asyncapi-base-url') || req.header('referer') || req.header('origin')
     };
 
     try {

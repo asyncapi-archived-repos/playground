@@ -20,7 +20,7 @@ router.post('/generate', version, async (req, res) => {
           withCredentials: true,
         }
       },
-      path: req.header('x-asyncapi-base-url')
+      path: req.header('x-asyncapi-base-url') || req.header('referer') || req.header('origin')
     };
 
     const generator = new AsyncAPIGenerator('@asyncapi/html-template', os.tmpdir(), {
