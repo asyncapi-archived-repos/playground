@@ -37,7 +37,6 @@ Then browse to [http://localhost:83/]()
 There are two parameters that serve the same purpose:
 
 - **load** parameter:
-
 ```
 https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/simple.yml
 ```
