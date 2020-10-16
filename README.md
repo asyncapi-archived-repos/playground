@@ -34,7 +34,7 @@ Then browse to [http://localhost:83/]()
 
 ## Load async api
 
-2 ways to load async apis from an url: 
+There are two parameters that serve the same purpose:
 
 - **load** parameter:
 
