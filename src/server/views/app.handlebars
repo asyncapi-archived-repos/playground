@@ -97,10 +97,8 @@
         });
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('load')) {
-      document.getElementById('fetch-document-url').value = urlParams.get('load'); 
-      fetch(urlParams.get('load'))
+    function loadAsyncApi(asyncApiUrl) {
+      fetch(asyncApiUrl)
         .then(function (response) {
           if (!response.ok) throw new Error(response.statusText);
           return response.text();
@@ -109,6 +107,26 @@
           App.dispatchEvent(new CustomEvent('updateCode', { detail: doc }));
         })
         .catch(console.error);
+    }
+
+    function updateFetchDocumentUrlElement(value) {
+      document.getElementById('fetch-document-url').value = value;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('load')) {
+      const asyncApiUrl = urlParams.get('load')
+
+      updateFetchDocumentUrlElement(asyncApiUrl)
+      loadAsyncApi(asyncApiUrl)
+    }
+
+    if (urlParams.get('url')) {
+      const asyncApiUrl = urlParams.get('url')
+
+      updateFetchDocumentUrlElement(asyncApiUrl)
+      loadAsyncApi(asyncApiUrl)
     }
 
     App.addEventListener('templateChange', (e) => {
