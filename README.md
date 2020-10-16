@@ -32,7 +32,7 @@ docker run -d --name asyncapi-playground -p 83:5000 asyncapi-playground:latest
 
 Then browse to [http://localhost:83/]()
 
-## Load async api
+## Load AsyncAPI with URL query parameter
 
 There are two parameters that serve the same purpose:
 
@@ -45,4 +45,3 @@ https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/
 ```
 https://playground.asyncapi.io/?url=https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/simple.yml
 ```
-
