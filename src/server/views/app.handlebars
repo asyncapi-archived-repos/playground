@@ -109,10 +109,6 @@
         .catch(console.error);
     }
 
-    function updateFetchDocumentUrlElement(value) {
-      document.getElementById('fetch-document-url').value = value;
-    }
-
     const urlParams = new URLSearchParams(window.location.search);
     const asyncApiUrl = urlParams.get('load') || urlParams.get('url');
 
