@@ -36,13 +36,13 @@ Then browse to [http://localhost:83/]()
 
 2 ways to load async apis from an url: 
 
-- Use the *load* parameter.
+- **load** parameter.
 
 ```
 https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/simple.yml
 ```
 
-- Use the *url* parameter.
+- **url** parameter.
 ```
 https://playground.asyncapi.io/?url=https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/simple.yml
 ```
