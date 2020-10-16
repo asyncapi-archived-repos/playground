@@ -1,8 +1,8 @@
 name: Welcome first time contributors
 
 on:
-  pull_request:
-    types: 
+  pull_request_target:
+    types:
       - opened
   issues:
     types:
