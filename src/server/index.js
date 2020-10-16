@@ -56,7 +56,17 @@ app.use((err, req, res, next) => {
   res.status(500).send(error);
 });
 
-const server = app.listen(process.env.PORT || config.api.port);
+const getReadableAddress = (address) => {
+  if (address === '::') return 'localhost'
+
+  return address
+}
+
+const server = app.listen(process.env.PORT || config.api.port, () => {
+  const { port, address } = server.address()
+
+  console.log(`Application available on http://${getReadableAddress(address)}:${port}`)
+});
 const shutdownManager = new GracefulShutdownManager(server);
 
 process.on('SIGTERM', () => {
