@@ -12,10 +12,10 @@
   "license": "MIT",
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^0.2.0",
-    "@asyncapi/generator": "^1.0.0-rc.11",
+    "@asyncapi/generator": "^1.0.0-rc.13",
     "@asyncapi/html-template": "^0.15.0",
     "@asyncapi/markdown-template": "^0.10.0",
-    "@asyncapi/parser": "^1.0.0-rc.5",
+    "@asyncapi/parser": "^1.0.1",
     "@moebius/http-graceful-shutdown": "^1.1.0",
     "archiver": "^3.0.0",
     "asyncapi-converter": "^0.4.2",
