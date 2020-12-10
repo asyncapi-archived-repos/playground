@@ -3,7 +3,9 @@
   "version": "1.4.0",
   "description": "Editor for AsyncAPI documentation.",
   "scripts": {
-    "start": "node src/server/index.js"
+    "start": "node src/server/index.js",
+    "lint": "echo 'No linter configured yet'",
+    "test": "echo 'No tests yet'"
   },
   "engines": {
     "node": ">=8.2.1"
