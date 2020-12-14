@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { convert } = require('asyncapi-converter');
+const { convert } = require('@asyncapi/converter');
 
 module.exports = router;
 
