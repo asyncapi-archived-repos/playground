@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12-buster-slim
 
 # Create app directory
 RUN mkdir -p /usr/src/app
