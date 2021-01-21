@@ -71,7 +71,7 @@
               const errorWrapperEl = document.querySelector('.errors-wrapper');
 
               function getErrorsHTMLFrom(res) {
-                if (res.body.detail && res.body.code === 'bad indentation') {
+                if (res.body.detail) {
                   return res.body.detail;
                 }
 

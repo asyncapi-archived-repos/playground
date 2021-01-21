@@ -51,13 +51,8 @@ app.use((err, req, res, next) => {
     code: err.code || 'unexpected',
     message: err.message || 'Unexpected error',
   };
-  if (err.detail && err.detail.startsWith("bad indentation")) {
-    error.code = 'bad indentation';
-    error.message = err.detail;
-  }
+  if (err.detail) error.detail = err.detail;
   if (err.validationErrors) error.validationErrors = err.validationErrors;
-
-
   res.status(500).send(error);
 });
 
