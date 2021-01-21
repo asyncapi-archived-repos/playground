@@ -69,7 +69,21 @@
             } else {
               const errorsEl = document.getElementById('document-errors');
               const errorWrapperEl = document.querySelector('.errors-wrapper');
-              errorsEl.innerHTML = res.body.errors ? JSON.stringify(res.body.errors, null, 2) : res.body.message;
+
+              function getErrorsHTMLFrom(res) {
+                if (res.body.detail && res.body.code === 'bad indentation') {
+                  return res.body.detail;
+                }
+
+                if (res.body.validationErrors) {
+                  const errorsSimplified = res.body.validationErrors.map(error => `${error.title} on line ${error.location.startLine}, column ${error.location.startColumn}`);
+                  return JSON.stringify(errorsSimplified, null, 2);
+                }
+
+                return res.body.message;
+              }
+
+              errorsEl.innerHTML = getErrorsHTMLFrom(res);
               errorWrapperEl.classList.remove('errors-wrapper--old-version');
               errorWrapperEl.classList.remove('errors-wrapper--hidden');
             }
