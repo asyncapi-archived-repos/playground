@@ -5,7 +5,10 @@
   "scripts": {
     "start": "node src/server/index.js",
     "lint": "echo 'No linter configured yet'",
-    "test": "echo 'No tests yet'"
+    "test": "echo 'No tests yet'",
+    "release": "echo 'This package is not yet released in automated way'",
+    "bump:version": "echo 'No automated version bump as we do not release this package in automated yet'",
+    "generate:assets": "echo 'No assets to generate yet'"
   },
   "engines": {
     "node": ">=8.2.1"
