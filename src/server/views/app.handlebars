@@ -69,7 +69,28 @@
             } else {
               const errorsEl = document.getElementById('document-errors');
               const errorWrapperEl = document.querySelector('.errors-wrapper');
-              errorsEl.innerHTML = res.body.errors ? JSON.stringify(res.body.errors, null, 2) : res.body.message;
+
+              function getErrorsHTMLFrom(res) {
+                function getErrorMessage(error) {
+                  if (error.location.startLine && error.location.startColumn) {
+                    return `${error.title} at line ${error.location.startLine}, column ${error.location.startColumn}`
+                  }
+                  return `${error.title}`;
+                }
+
+                if (res.body.detail) {
+                  return res.body.detail;
+                }
+
+                if (res.body.validationErrors) {
+                  const errorsSimplified = res.body.validationErrors.map(getErrorMessage);
+                  return JSON.stringify(errorsSimplified, null, 2);
+                }
+
+                return res.body.message;
+              }
+
+              errorsEl.innerHTML = getErrorsHTMLFrom(res);
               errorWrapperEl.classList.remove('errors-wrapper--old-version');
               errorWrapperEl.classList.remove('errors-wrapper--hidden');
             }
