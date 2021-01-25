@@ -71,12 +71,19 @@
               const errorWrapperEl = document.querySelector('.errors-wrapper');
 
               function getErrorsHTMLFrom(res) {
+                function getErrorMessage(error) {
+                  if (error.location.startLine && error.location.startColumn) {
+                    return `${error.title} at line ${error.location.startLine}, column ${error.location.startColumn}`
+                  }
+                  return `${error.title}`;
+                }
+
                 if (res.body.detail) {
                   return res.body.detail;
                 }
 
                 if (res.body.validationErrors) {
-                  const errorsSimplified = res.body.validationErrors.map(error => `${error.title} on line ${error.location.startLine}, column ${error.location.startColumn}`);
+                  const errorsSimplified = res.body.validationErrors.map(getErrorMessage);
                   return JSON.stringify(errorsSimplified, null, 2);
                 }
 
