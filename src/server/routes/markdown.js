@@ -23,13 +23,13 @@ router.post('/generate', version, async (req, res) => {
     };
 
     const generator = new AsyncAPIGenerator('@asyncapi/markdown-template', os.tmpdir(), {
-      entrypoint: 'asyncapi.md',
+      entrypoint: 'asyncapi.js',
       output: 'string',
       forceWrite: true,
     });
     const markdown = await generator.generateFromString(req.body, parserOptions);
 
-    res.send(markdown);
+    res.send(markdown.content);
   } catch (e) {
     return res.status(422).send({
       code: 'incorrect-format',
@@ -47,12 +47,12 @@ router.post('/download', async (req, res, next) => {
   archive.append(req.body.data, { name: 'asyncapi.yml' });
   try {
     const generator = new AsyncAPIGenerator('@asyncapi/markdown-template', os.tmpdir(), {
-      entrypoint: 'asyncapi.md',
+      entrypoint: 'asyncapi.js',
       output: 'string',
       forceWrite: true,
     });
     const markdown = await generator.generateFromString(req.body.data);
-    archive.append(markdown, { name: 'asyncapi.md' });
+    archive.append(markdown.content, { name: 'asyncapi.md' });
     archive.finalize();
   } catch (e) {
     console.error(e);
