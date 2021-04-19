@@ -88,34 +88,10 @@ router.post('/download', async (req, res, next) => {
       errors: Array.isArray(e) ? e : null
     });
   }
-
+  
   try {
-    const css = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'css/tailwind.min.css', path.resolve(__dirname, '../../../node_modules'));
-    archive.append(css, { name: 'css/tailwind.min.css' });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send({
-      code: 'server-error',
-      message: e.message,
-      errors: e
-    });
-  }
-
-  try {
-    const css = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'css/atom-one-dark.min.css', path.resolve(__dirname, '../../../node_modules'));
-    archive.append(css, { name: 'css/atom-one-dark.min.css' });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send({
-      code: 'server-error',
-      message: e.message,
-      errors: e
-    });
-  }
-
-  try {
-    const css = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'css/main.css', path.resolve(__dirname, '../../../node_modules'));
-    archive.append(css, { name: 'css/main.css' });
+    const css = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'css/main.min.css', path.resolve(__dirname, '../../../node_modules'));
+    archive.append(css, { name: 'css/main.min.css' });
   } catch (e) {
     console.error(e);
     return res.status(500).send({
