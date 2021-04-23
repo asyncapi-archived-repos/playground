@@ -21,7 +21,7 @@
     "@asyncapi/generator": "^1.6.10",
     "@asyncapi/html-template": "^0.20.1",
     "@asyncapi/markdown-template": "^0.13.10",
-    "@asyncapi/parser": "^1.4.5",
+    "@asyncapi/parser": "^1.5.0",
     "@moebius/http-graceful-shutdown": "^1.1.0",
     "archiver": "^3.0.0",
     "body-parser": "^1.17.2",
