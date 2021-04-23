@@ -27,6 +27,9 @@ router.post('/generate', version, async (req, res) => {
       entrypoint: 'index.html',
       output: 'string',
       forceWrite: true,
+      templateParams: {
+        singleFile: true,
+      },
     });
     const html = await generator.generateFromString(req.body, parserOptions);
 
@@ -34,32 +37,6 @@ router.post('/generate', version, async (req, res) => {
   } catch (e) {
     console.error(e);
     return res.status(422).json(e);
-  }
-});
-
-router.get('/template/css/*', async (req, res) => {
-  const filename = req.params[0];
-
-  try {
-    const content = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', `css/${filename}`, path.resolve(__dirname, '../../../node_modules'));
-
-    res.header('Content-Type', 'text/css').send(content);
-  } catch (e) {
-    console.error(e);
-    return res.status(404).send();
-  }
-});
-
-router.get('/template/js/*', async (req, res) => {
-  const filename = req.params[0];
-
-  try {
-    const content = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', `js/${filename}`, path.resolve(__dirname, '../../../node_modules'));
-
-    res.header('Content-Type', 'application/javascript').send(content);
-  } catch (e) {
-    console.error(e);
-    return res.status(404).send();
   }
 });
 
@@ -77,53 +54,20 @@ router.post('/download', async (req, res, next) => {
       entrypoint: 'index.html',
       output: 'string',
       forceWrite: true,
+      templateParams: {
+        singleFile: true,
+      },
     });
     const html = await generator.generateFromString(req.body.data);
+    
     archive.append(html, { name: 'index.html' });
+    archive.finalize();
   } catch (e) {
     console.error(e);
     return res.status(422).send({
       code: 'incorrect-format',
       message: e.message,
       errors: Array.isArray(e) ? e : null
-    });
-  }
-  
-  try {
-    const css = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'css/main.min.css', path.resolve(__dirname, '../../../node_modules'));
-    archive.append(css, { name: 'css/main.min.css' });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send({
-      code: 'server-error',
-      message: e.message,
-      errors: e
-    });
-  }
-
-  try {
-    const js = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'js/highlight.min.js', path.resolve(__dirname, '../../../node_modules'));
-    archive.append(js, { name: 'js/highlight.min.js' });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send({
-      code: 'server-error',
-      message: e.message,
-      errors: e
-    });
-  }
-
-  try {
-    const js = await AsyncAPIGenerator.getTemplateFile('@asyncapi/html-template/template', 'js/main.js', path.resolve(__dirname, '../../../node_modules'));
-    archive.append(js, { name: 'js/main.js' });
-
-    archive.finalize();
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send({
-      code: 'server-error',
-      message: e.message,
-      errors: e
     });
   }
 });
