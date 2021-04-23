@@ -59,7 +59,7 @@ router.post('/download', async (req, res, next) => {
       },
     });
     const html = await generator.generateFromString(req.body.data);
-    
+
     archive.append(html, { name: 'index.html' });
     archive.finalize();
   } catch (e) {
