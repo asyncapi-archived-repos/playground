@@ -3,7 +3,6 @@
     {{#>tabs id='TemplateTabs'}}
       {{>tab name='template' value='html' id=(concat css.rightPane '-html-radio' '') checked=true title='HTML'}}
       {{>tab name='template' value='markdown' id=(concat css.rightPane '-markdown-radio' '') title='Markdown'}}
-      {{>tab name='template' value='react' id=(concat css.rightPane '-react-radio' '') title='React (coming soon)' disabled=true}}
     {{/tabs}}
     <div class="{{css.rightPane}}__toolbar__content {{css.rightPane}}__toolbar__content--right">
       {{>button button=true class='js-download-docs' icon='fas fa-cloud-download-alt' size='small' title='Download'}}
