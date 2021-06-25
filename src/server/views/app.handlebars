@@ -5,9 +5,15 @@
 
   <div id="convert-dialog" class="hidden">
     <img src="/img/rocket-launch.png">
-    <h2>Convert to 2.0.0</h2>
-    <p>Your document is using an old version of AsyncAPI. The playground only supports 2.0.0 and above. Convert your
-      document to continue.</p>
+    <h2>Convert to 2.1.0</h2>
+    <p>Your document is using an old version of AsyncAPI. Have in mind that playground only supports 2.0.0 and above. Convert your document to continue.</p>
+    <a 
+      href="..." 
+      target="_blank"
+      rel="nofollow noopener noreferrer"
+    >
+      See the release notes
+    </a>
     <div>
       {{>button button=true class="js-convert" style="margin-left:0;color:white;font-size:16px;padding:10px 15px;font-weight:normal;" text='Convert now' primary=true}}
     </div>
@@ -39,6 +45,12 @@
 }
 #convert-dialog p {
   font-size: 14px;
+  margin-bottom: 20px;
+  color: #777;
+}
+#convert-dialog a {
+  display: inline-block;
+  font-size: 16px;
   margin-bottom: 20px;
   color: #777;
 }
