@@ -14,3 +14,14 @@ router.post('/', async (req, res) => {
     });
   }
 });
+
+router.get('/is-latest-version', async (req, res) => {
+  try {
+    res.send();
+  } catch (e) {
+    return res.status(422).send({
+      code: 'convert-error',
+      message: e.message,
+    });
+  }
+});
