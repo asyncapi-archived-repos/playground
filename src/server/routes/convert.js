@@ -6,7 +6,7 @@ module.exports = router;
 
 router.post('/', async (req, res) => {
   try {
-    res.send(convert(req.body, '2.0.0'));
+    res.send(convert(req.body, '2.1.0'));
   } catch (e) {
     return res.status(422).send({
       code: 'convert-error',
