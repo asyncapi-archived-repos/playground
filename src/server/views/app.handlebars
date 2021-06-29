@@ -86,7 +86,7 @@
       template: 'html',
     };
 
-    const HALF_HOUR = 30 * 60 * 1000; /* ms */
+    const ONE_DAY = 24 * 60 * 60 * 1000; /* ms */
 
     function is2_0_0version(code) {
       if (/('|"|)asyncapi('|"|): ('|"|)2.0.0('|"|)/.test(code)) {
@@ -196,7 +196,7 @@
         if (localStorage.getItem('informed-about-v2.1.0')) {
           dateOfLastQuestion = new Date(localStorage.getItem('informed-about-v2.1.0'));
         }
-        const shouldShowModal = (nowDate === dateOfLastQuestion) || ((nowDate.getTime() - dateOfLastQuestion.getTime()) > HALF_HOUR)
+        const shouldShowModal = (nowDate === dateOfLastQuestion) || ((nowDate.getTime() - dateOfLastQuestion.getTime()) > ONE_DAY)
         if (shouldShowModal && is2_0_0version(trimedCode)) {
           const convertDialog = document.getElementById('convert-dialog-2.0.0');
           convertDialog.classList.remove('hidden');
