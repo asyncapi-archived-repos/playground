@@ -80,10 +80,13 @@
   window.addEventListener('load', () => {
     const App = document.getElementById('App');
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const templateParam = urlParams.get('template');
+
     const state = {
       code: null,
       url: null,
-      template: 'html',
+      template: templateParam === 'markdown' ? 'markdown' : 'html',
     };
 
     const ONE_DAY = 24 * 60 * 60 * 1000; /* ms */
@@ -171,15 +174,14 @@
         .catch(console.error);
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
     const asyncApiUrl = urlParams.get('load') || urlParams.get('url');
-
     if (asyncApiUrl) {
       document.getElementById('fetch-document-url').value = asyncApiUrl;
       loadAsyncApi(asyncApiUrl);
     }
 
     App.addEventListener('templateChange', (e) => {
+      console.log('dupa')
       state.template = e.detail;
       generate();
     });

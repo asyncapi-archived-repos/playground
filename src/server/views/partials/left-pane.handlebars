@@ -301,6 +301,13 @@ components:
   const FetchInput = document.getElementById('fetch-document-url');
   const FetchForm = document.getElementById('fetch-document');
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const collapseEditorParam = urlParams.get('collapseEditor');
+  
+  if (collapseEditorParam === '' || collapseEditorParam === 'true') {
+    document.querySelector('.{{css.leftPane}}').classList.add('{{css.leftPane}}--collapsed');
+  }
+
   document.querySelector('.js-collapse-{{css.leftPane}}').addEventListener('click', function () {
     document.querySelector('.{{css.leftPane}}').classList.toggle('{{css.leftPane}}--collapsed');
   });
