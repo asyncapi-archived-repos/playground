@@ -52,8 +52,8 @@ https://playground.asyncapi.io/?url=https://raw.githubusercontent.com/asyncapi/a
 https://playground.asyncapi.io/?template=markdown
 ```
 
-- **collapseEditor** - collapse the editor. Allowed values are `true` and empty string:
+- **readOnly** - show only rendered template. Allowed values are `true` and empty string:
 
 ```
-https://playground.asyncapi.io/?collapseEditor
+https://playground.asyncapi.io/?readOnly
 ```
