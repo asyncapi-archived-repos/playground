@@ -189,6 +189,7 @@
     }
     // Show app after updating above styles
     // thanks to this we avoid the appearance of the editor and topbar for a few milliseconds.
+    // We have to also refresh the CodeMirror container
     document.querySelector('#App').classList.remove('hidden');
     document.querySelector('.CodeMirror').CodeMirror.refresh();
 
