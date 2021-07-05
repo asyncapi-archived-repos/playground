@@ -190,6 +190,7 @@
     // Show app after updating above styles
     // thanks to this we avoid the appearance of the editor and topbar for a few milliseconds.
     document.querySelector('#App').classList.remove('hidden');
+    document.querySelector('.CodeMirror').CodeMirror.refresh();
 
     if (asyncApiUrl) {
       document.getElementById('fetch-document-url').value = asyncApiUrl;
