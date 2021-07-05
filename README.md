@@ -32,16 +32,28 @@ docker run -d --name asyncapi-playground -p 83:5000 asyncapi-playground:latest
 
 Then browse to [http://localhost:83/]()
 
-## Load AsyncAPI with URL query parameter
+## URL query parameters:
 
-There are two parameters that serve the same purpose:
+- **load** - load the external AsyncAPI spec:
 
-- **load** parameter:
 ```
 https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/simple.yml
 ```
 
-- **url** parameter:
+- **url** - this same purpose as **load**:
+
 ```
 https://playground.asyncapi.io/?url=https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/simple.yml
+```
+
+- **template** - show given template. Allowed values are `markdown` and `html`:
+
+```
+https://playground.asyncapi.io/?template=markdown
+```
+
+- **readOnly** - show only rendered template. Allowed values are `true` and empty string:
+
+```
+https://playground.asyncapi.io/?readOnly
 ```

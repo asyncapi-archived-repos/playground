@@ -1,4 +1,4 @@
-<div id="App">
+<div id="App" class="hidden">
   {{> topbar embedded=embedded }}
   {{~> left-pane app='#App' ~}}
   {{> right-pane app='#App' }}
@@ -41,6 +41,9 @@
 </div>
 
 <style>
+.hidden {
+  display: none;
+}
 .convert-dialog {
   position: fixed;
   left: calc(50% - 240px);
@@ -80,10 +83,15 @@
   window.addEventListener('load', () => {
     const App = document.getElementById('App');
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const templateParam = urlParams.get('template');
+    const readOnlyParam = urlParams.get('readOnly');
+    const asyncApiUrl = urlParams.get('load') || urlParams.get('url');
+
     const state = {
       code: null,
       url: null,
-      template: 'html',
+      template: templateParam === 'markdown' ? 'markdown' : 'html',
     };
 
     const ONE_DAY = 24 * 60 * 60 * 1000; /* ms */
@@ -171,8 +179,19 @@
         .catch(console.error);
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const asyncApiUrl = urlParams.get('load') || urlParams.get('url');
+    // If someone pass the `readOnly` query parameter then hide left pane with topbar
+    if (readOnlyParam === '' || readOnlyParam === 'true') {
+      document.querySelector('.{{css.topBar}}').classList.add('hidden');
+      document.querySelector('.{{css.leftPane}}').classList.add('{{css.leftPane}}--collapsed');
+      document.querySelector('.{{css.leftPane}}__collapser').classList.add('hidden');
+      document.querySelector('.{{css.rightPane}}').style.top = 0;
+      document.querySelector('.{{css.rightPane}}__toolbar').classList.add('hidden');
+    }
+    // Show app after updating above styles
+    // thanks to this we avoid the appearance of the editor and topbar for a few milliseconds.
+    // We have to also refresh the CodeMirror container
+    document.querySelector('#App').classList.remove('hidden');
+    document.querySelector('.CodeMirror').CodeMirror.refresh();
 
     if (asyncApiUrl) {
       document.getElementById('fetch-document-url').value = asyncApiUrl;

@@ -85,13 +85,10 @@
 <script>
 (() => {
   const App = document.querySelector('{{app}}');
-  const state = {
-    template: 'html',
-  };
+  const templateTabs = document.getElementById('TemplateTabs');
 
-  document.getElementById('TemplateTabs').addEventListener('selectTab', (e) => {
-    var iframe = document.getElementById('result');
-
+  templateTabs.addEventListener('selectTab', (e) => {
+    const iframe = document.getElementById('result');
     iframe.onload = () => { // Use onload instead of addEventListener to listen the event just once.
       App.dispatchEvent(new CustomEvent('templateChange', { detail: e.detail }));
     };
@@ -109,5 +106,18 @@
   document.querySelector('.js-download-docs').addEventListener('click', function () {
     App.dispatchEvent(new CustomEvent('downloadDocs'));
   });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const templateParam = urlParams.get('template');
+  
+  switch (templateParam) {
+    case 'markdown': {
+      const markdownTab = templateTabs.querySelector('input[value="markdown"]');
+      markdownTab.checked = true;
+      templateTabs.dispatchEvent(new CustomEvent('selectTab', { detail: 'markdown' }));
+      break;
+    }
+    // html is opened by default
+  }
 })();
 </script>
