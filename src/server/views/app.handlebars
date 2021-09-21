@@ -5,10 +5,10 @@
 
   <div id="convert-dialog-older" class="convert-dialog hidden">
     <img src="/img/rocket-launch.png">
-    <h2>Convert to 2.1.0</h2>
-    <p>Your document is using an old version of AsyncAPI. The playground only supports 2.0.0 and above. Convert your document to latest (2.1.0) version to continue.</p>
+    <h2>Convert to 2.2.0</h2>
+    <p>Your document is using an old version of AsyncAPI. The playground only supports 2.0.0 and above. Convert your document to latest (2.2.0) version to continue.</p>
     <a 
-      href="https://www.asyncapi.com/blog/release-notes-2.1.0" 
+      href="https://www.asyncapi.com/blog/release-notes-2.2.0" 
       target="_blank"
       rel="nofollow noopener noreferrer"
     >
@@ -20,10 +20,10 @@
   </div>
   <div id="convert-dialog-2.0.0" class="convert-dialog hidden">
     <img src="/img/rocket-launch.png">
-    <h2>Convert to 2.1.0</h2>
-    <p>Your document is using an old version of AsyncAPI. Convert your document to latest (2.1.0) version to continue.</p>
+    <h2>Convert to 2.2.0</h2>
+    <p>Your document is using an old version of AsyncAPI. Convert your document to latest (2.2.0) version to continue.</p>
     <a 
-      href="https://www.asyncapi.com/blog/release-notes-2.1.0" 
+      href="https://www.asyncapi.com/blog/release-notes-2.2.0" 
       target="_blank"
       rel="noopener"
     >
@@ -97,7 +97,7 @@
     const ONE_DAY = 24 * 60 * 60 * 1000; /* ms */
 
     function is2_0_0version(code) {
-      if (/('|"|)asyncapi('|"|): ('|"|)2.0.0('|"|)/.test(code)) {
+      if (/('|"|)asyncapi('|"|): ('|"|)2.(0|1).0('|"|)/.test(code)) {
         return true;
       }
       return false;
@@ -212,14 +212,14 @@
 
         const nowDate = new Date;
         let dateOfLastQuestion = nowDate;
-        if (localStorage.getItem('informed-about-v2.1.0')) {
-          dateOfLastQuestion = new Date(localStorage.getItem('informed-about-v2.1.0'));
+        if (localStorage.getItem('informed-about-v2.2.0')) {
+          dateOfLastQuestion = new Date(localStorage.getItem('informed-about-v2.2.0'));
         }
         const shouldShowModal = (nowDate === dateOfLastQuestion) || ((nowDate.getTime() - dateOfLastQuestion.getTime()) > ONE_DAY)
         if (shouldShowModal && is2_0_0version(trimedCode)) {
           const convertDialog = document.getElementById('convert-dialog-2.0.0');
           convertDialog.classList.remove('hidden');
-          localStorage.setItem('informed-about-v2.1.0', nowDate);
+          localStorage.setItem('informed-about-v2.2.0', nowDate);
         }
       }
     });
