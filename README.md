@@ -13,7 +13,7 @@ npm install
 and
 
 ```
-npm run dev
+npm start
 ```
 
 and go to [http://localhost:5000]().
