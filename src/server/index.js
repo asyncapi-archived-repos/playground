@@ -20,7 +20,7 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-if (process.env.ENABLE_DEBUG) {
+if (!process.env.DISABLE_DEBUG) {
   app.use((req, res, next) => {
     if (req.method === 'POST') {
       console.log('==================');

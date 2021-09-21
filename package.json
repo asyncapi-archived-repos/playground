@@ -4,6 +4,7 @@
   "description": "Editor for AsyncAPI documentation.",
   "scripts": {
     "start": "node src/server/index.js",
+    "dev": "node src/server/index.js",
     "lint": "echo 'No linter configured yet'",
     "test": "echo 'No tests yet'",
     "release": "echo 'This package is not yet released in automated way'",

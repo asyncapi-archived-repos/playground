@@ -13,7 +13,7 @@ npm install
 and
 
 ```
-npm start
+npm run dev
 ```
 
 and go to [http://localhost:5000]().
@@ -60,8 +60,8 @@ https://playground.asyncapi.io/?readOnly
 
 ## Environment variables:
 
-- **ENABLE_DEBUG** - set it to 1 or `true` to show logs:
+- **DISABLE_DEBUG** - set it to 1 or `true` to disable logs:
 
 ```
-ENABLE_DEBUG=1 npm start
+DISABLE_DEBUG=1 npm start
 ```
