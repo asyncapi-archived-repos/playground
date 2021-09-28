@@ -57,3 +57,11 @@ https://playground.asyncapi.io/?template=markdown
 ```
 https://playground.asyncapi.io/?readOnly
 ```
+
+## Environment variables:
+
+- **DISABLE_DEBUG** - set it to 1 or `true` to disable logs:
+
+```
+DISABLE_DEBUG=1 npm start
+```
