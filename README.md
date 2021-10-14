@@ -37,13 +37,13 @@ Then browse to [http://localhost:83/]()
 - **load** - load the external AsyncAPI spec:
 
 ```
-https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml
+https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/spec/master/examples/streetlights-kafka.yml
 ```
 
 - **url** - this same purpose as **load**:
 
 ```
-https://playground.asyncapi.io/?url=https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml
+https://playground.asyncapi.io/?url=https://raw.githubusercontent.com/asyncapi/spec/master/examples/streetlights-kafka.yml
 ```
 
 - **template** - show given template. Allowed values are `markdown` and `html`:
