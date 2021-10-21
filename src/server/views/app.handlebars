@@ -7,8 +7,8 @@
     <img src="/img/rocket-launch.png">
     <h2>Convert to 2.2.0</h2>
     <p>Your document is using an old version of AsyncAPI. The playground only supports 2.0.0 and above. Convert your document to latest (2.2.0) version to continue.</p>
-    <a 
-      href="https://www.asyncapi.com/blog/release-notes-2.2.0" 
+    <a
+      href="https://www.asyncapi.com/blog/release-notes-2.2.0"
       target="_blank"
       rel="nofollow noopener noreferrer"
     >
@@ -22,8 +22,8 @@
     <img src="/img/rocket-launch.png">
     <h2>Convert to 2.2.0</h2>
     <p>Your document is using an old version of AsyncAPI. Convert your document to latest (2.2.0) version to continue.</p>
-    <a 
-      href="https://www.asyncapi.com/blog/release-notes-2.2.0" 
+    <a
+      href="https://www.asyncapi.com/blog/release-notes-2.2.0"
       target="_blank"
       rel="noopener"
     >
@@ -87,6 +87,7 @@
     const templateParam = urlParams.get('template');
     const readOnlyParam = urlParams.get('readOnly');
     const asyncApiUrl = urlParams.get('load') || urlParams.get('url');
+    const schemaBase64Param = urlParams.get('base64');
 
     const state = {
       code: null,
@@ -196,6 +197,11 @@
     if (asyncApiUrl) {
       document.getElementById('fetch-document-url').value = asyncApiUrl;
       loadAsyncApi(asyncApiUrl);
+    }
+
+    if (schemaBase64Param) {
+      let decodedString = decodeURIComponent(escape(atob(schemaBase64Param)))
+      App.dispatchEvent(new CustomEvent('updateCode', { detail: decodedString }));
     }
 
     App.addEventListener('templateChange', (e) => {
