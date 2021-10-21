@@ -58,6 +58,12 @@ https://playground.asyncapi.io/?template=markdown
 https://playground.asyncapi.io/?readOnly
 ```
 
+- **base64** - supply base64 encoded schema in yaml/json to open it in playground
+
+```
+https://playground.asyncapi.io/?base64=<Base64 encoded schema in json/YAML>
+```
+
 ## Environment variables:
 
 - **DISABLE_DEBUG** - set it to 1 or `true` to disable logs:
