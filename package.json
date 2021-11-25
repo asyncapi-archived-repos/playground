@@ -18,7 +18,7 @@
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^1.0.0",
     "@asyncapi/converter": "^0.6.0",
-    "@asyncapi/generator": "^1.8.23",
+    "@asyncapi/generator": "^1.8.25",
     "@asyncapi/html-template": "^0.23.14",
     "@asyncapi/markdown-template": "^0.19.7",
     "@asyncapi/parser": "^1.12.0",
