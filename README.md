@@ -1,3 +1,5 @@
+> NOTE: This package has been deprecated in favor of the [AsyncAPI Studio](https://github.com/asyncapi/studio). To check Studio changes against Playground [check this list](https://studio.asyncapi.com/?redirectedFrom=playground).
+
 # AsyncAPI Playground
 
 ![](screenshot.png)
